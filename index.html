@@ -8,7 +8,27 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
+    <div id="container">
+        <form id="form">
+            <div id="display"></div>
+            <textarea name="textarea" id="title-text" cols="60" rows="1" maxlength="50"></textarea>
+            <div id="container2">
+                <select id="days-dropbox" name="days-drop">
+                    <option value="default-value">Select Day</option>
+                </select>
+                <select id="months-dropbox" name="months-drop">
+                    <option value="default-value">Select Month</option>
+                </select>
+                <select id="years-dropbox" name="years-drop">
+                    <option value="default-value">Select Year</option>
+                    <!-- <option id="populate"></option> -->
+                </select>
+            </div>
+            <button id="submit-date">START APOCALYPSE</button>
+            <button id="go-back">SET NEW APOCALYPSE</button>
+        </form>
+    </div>
+
     <script src="scripts.js"></script>
 </body>
 </html>
