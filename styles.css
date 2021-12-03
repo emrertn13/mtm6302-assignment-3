@@ -135,10 +135,17 @@ body {
 
 
 
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 780px) {
     body {
         background: none;
         background-color: red;
+    }
+    #display {
+        background-color: black;
+        color: red;
+    }
+    #display-title {
+        color: red;
     }
 }
 @media screen and (max-width: 550px) {
@@ -154,10 +161,10 @@ body {
     }
     #countdown {
         flex-direction: column;
-        
     }
     #countdown span {
         width: fit-content;
         margin: 0 auto;
+        color: red;
     }
 }
