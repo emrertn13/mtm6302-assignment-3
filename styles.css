@@ -123,7 +123,7 @@ button:hover,
 }
 
 body {
-    background: url("/project/bg-main.png");
+    background: url("bg-main.png");
     background-repeat: no-repeat;
     background-size: 100%;
 }
