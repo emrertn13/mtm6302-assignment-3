@@ -31,9 +31,6 @@ const $displayBox = document.getElementById('display')
 const $submitDate = document.getElementById('submit-date')
 const $goBack = document.getElementById('go-back')
 
-
-const currentDate = new Date()
-
 // CODE 
 // Populate Options 
 $daysDropbox.innerHTML += `
@@ -82,10 +79,9 @@ $monthsDropbox.innerHTML += `
     <option value="10">November</option>
     <option value="11">December</option>
 ` 
-for(let years = 2021; years <= 2050; years++) {
+for(let years = 2021; years <= 2031; years++) {
     $yearsDropbox.innerHTML +=  `
         <option value="${years}">${years}</option>
-    
     `
 }
 
@@ -100,23 +96,112 @@ $yearsDropbox.addEventListener('change', function() {
     localStorage.setItem('Selected Year', parseInt($yearsDropbox.value))
 })
 
-// Print After Submit 
-$submitDate.addEventListener('click', function(submitDate) {
-    submitDate.preventDefault()
+if (localStorage.getItem('Title') != undefined) {
+    $displayBox.setAttribute('style', 'display: inline ; margin-bottom: 0')
+    $displayBox.innerHTML = `
+        <h1 id="display-title">${localStorage.getItem('Title')}</h1>
+        <div id="countdown">
+            <span id="countdown-days"> </span>
+            <span id="countdown-hours"> </span>
+            <span id="countdown-minutes"> </span>
+            <span id="countdown-seconds"> </span>
+        </div>
+    `
+
+    $titleText.setAttribute('style', 'display: none')
+}
+if (localStorage.getItem('Selected Year') != undefined) {
+    const $countdown = document.getElementById('countdown')
+
+    $displayBox.setAttribute('style', 'display: inline ; margin-bottom: 0')
+    $countdown.innerHTML = `
+        <span id="countdown-days"> </span>
+        <span id="countdown-hours"> </span>
+        <span id="countdown-minutes"> </span>
+        <span id="countdown-seconds"> </span>
+    `
+
+    const $countdownDays = document.getElementById('countdown-days')
+    const $countdownHours = document.getElementById('countdown-hours')
+    const $countdownMinutes = document.getElementById('countdown-minutes')
+    const $countdownSeconds = document.getElementById('countdown-seconds')
 
     const futureDate = new Date(localStorage.getItem('Selected Year'), localStorage.getItem('Selected Month'), localStorage.getItem('Selected Day'), 23, 59)
-    console.log(futureDate)
 
-    localStorage.setItem('Title', $titleText.value)
-    console.log($titleText.value)
-    $displayBox.setAttribute('style', 'display: inline')
-    $displayBox.innerHTML = `
-        <h1 id="display-title">${$titleText.value}</h1>
-    `
+    setInterval(function() {
+        const currentDate = Date.now()
+        
+        let difference = (futureDate.getTime() - currentDate)  / 3600000
+        
+        let daysAway = difference / 24
+        let hoursAway = difference
+        let minutesAway = difference * 60
+        let secondsAway = difference * 3600
+
+        $countdownDays.textContent = parseInt(daysAway) + ' ' + 'DAYS'
+        $countdownHours.textContent = parseInt(hoursAway) + ' ' + 'HOURS'
+        $countdownMinutes.textContent = parseInt(minutesAway) + ' ' + 'MINUTES'
+        $countdownSeconds.textContent = parseInt(secondsAway) + ' ' + 'SECONDS AWAY!'
+    }, 1000)
+
+    $daysDropbox.setAttribute('style', 'display: none')
+    $monthsDropbox.setAttribute('style', 'display: none')
+    $yearsDropbox.setAttribute('style', 'display: none')
 
     $goBack.setAttribute('style', 'display: inline')
     $submitDate.setAttribute('style', 'display: none')
+}
+
+// Print After Submit 
+$submitDate.addEventListener('click', function(submitDate) {
+    submitDate.preventDefault()
+    
+    localStorage.setItem('Title', $titleText.value)
+    console.log($titleText.value)
+    $displayBox.setAttribute('style', 'display: inline ; margin-bottom: 0')
+    $displayBox.innerHTML = `
+        <h1 id="display-title">${$titleText.value}</h1>
+        <div id="countdown">
+            <span id="countdown-days"> </span>
+            <span id="countdown-hours"> </span>
+            <span id="countdown-minutes"> </span>
+            <span id="countdown-seconds"> </span>
+        </div>
+    `
+    const $countdown = document.getElementById('countdown')
+    const $countdownDays = document.getElementById('countdown-days')
+    const $countdownHours = document.getElementById('countdown-hours')
+    const $countdownMinutes = document.getElementById('countdown-minutes')
+    const $countdownSeconds = document.getElementById('countdown-seconds')
+    
+    $goBack.setAttribute('style', 'display: inline')
+    $submitDate.setAttribute('style', 'display: none')
+    
+    $daysDropbox.setAttribute('style', 'display: none')
+    $monthsDropbox.setAttribute('style', 'display: none')
+    $yearsDropbox.setAttribute('style', 'display: none')
+    $titleText.setAttribute('style', 'display: none')
+    
+    const futureDate = new Date(localStorage.getItem('Selected Year'), localStorage.getItem('Selected Month'), localStorage.getItem('Selected Day'), 23, 59)
+
+    setInterval(function() {
+        const currentDate = Date.now()
+        
+        let difference = (futureDate.getTime() - currentDate)  / 3600000
+        
+        let daysAway = difference / 24
+        let hoursAway = difference
+        let minutesAway = difference * 60
+        let secondsAway = difference * 3600
+
+        $countdownDays.textContent = parseInt(daysAway) + ' ' + 'DAYS'
+        $countdownHours.textContent = parseInt(hoursAway) + ' ' + 'HOURS'
+        $countdownMinutes.textContent = parseInt(minutesAway) + ' ' + 'MINUTES'
+        $countdownSeconds.textContent = parseInt(secondsAway) + ' ' + 'SECONDS AWAY!'
+    }, 1000)
+    
 })
+
 // Print After Refresh
 const storageTitle = localStorage.getItem('Title')
 console.log(storageTitle)
@@ -124,10 +209,19 @@ console.log(storageTitle)
 const storageDate = new Date(localStorage.getItem('Selected Year'), localStorage.getItem('Selected Month'), localStorage.getItem('Selected Day'), 23, 59)
 console.log(storageDate)
 
+// Start Over 
 $goBack.addEventListener('click', function(startOver) {
     startOver.preventDefault()
+
     $submitDate.setAttribute('style', 'display: inline')
     $goBack.setAttribute('style', 'display: none')
+
+    $daysDropbox.setAttribute('style', 'display: inline')
+    $monthsDropbox.setAttribute('style', 'display: inline')
+    $yearsDropbox.setAttribute('style', 'display: inline')
+    $titleText.setAttribute('style', 'display: inline')
+
+    $displayBox.setAttribute('style', 'display: none')
 })
 
 // RUN 
