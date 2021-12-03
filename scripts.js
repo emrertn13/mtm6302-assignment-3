@@ -17,6 +17,9 @@
 // -Button to take user back to form 
 // -Page refresh Calc Automatically starts
 
+// RESOURCES
+// MATHEMATICAL CALCULATIONS FOR DAYS< HOUR< MINUTES< SECONDS
+
 // DATA
 const $container = document.getElementById('container')
 const $form = document.getElementById('form')
@@ -30,6 +33,8 @@ const $displayBox = document.getElementById('display')
 
 const $submitDate = document.getElementById('submit-date')
 const $goBack = document.getElementById('go-back')
+
+const $backgroundImage = document.getElementById('backgroung-image')
 
 // CODE 
 // Populate Options 
@@ -131,12 +136,12 @@ if (localStorage.getItem('Selected Year') != undefined) {
     setInterval(function() {
         const currentDate = Date.now()
         
-        let difference = (futureDate.getTime() - currentDate)  / 3600000
+        let difference = (futureDate.getTime() - currentDate)
         
-        let daysAway = difference / 24
-        let hoursAway = difference
-        let minutesAway = difference * 60
-        let secondsAway = difference * 3600
+        let daysAway = difference / (1000 * 60 * 60 * 24)
+        let hoursAway = (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        let minutesAway = (difference % (1000 * 60 * 60)) / (1000 * 60)
+        let secondsAway = (difference % (1000 * 60)) / 1000
 
         $countdownDays.textContent = parseInt(daysAway) + ' ' + 'DAYS'
         $countdownHours.textContent = parseInt(hoursAway) + ' ' + 'HOURS'
@@ -180,6 +185,7 @@ $submitDate.addEventListener('click', function(submitDate) {
     $daysDropbox.setAttribute('style', 'display: none')
     $monthsDropbox.setAttribute('style', 'display: none')
     $yearsDropbox.setAttribute('style', 'display: none')
+
     $titleText.setAttribute('style', 'display: none')
     
     const futureDate = new Date(localStorage.getItem('Selected Year'), localStorage.getItem('Selected Month'), localStorage.getItem('Selected Day'), 23, 59)
@@ -187,19 +193,18 @@ $submitDate.addEventListener('click', function(submitDate) {
     setInterval(function() {
         const currentDate = Date.now()
         
-        let difference = (futureDate.getTime() - currentDate)  / 3600000
+        let difference = (futureDate.getTime() - currentDate)
         
-        let daysAway = difference / 24
-        let hoursAway = difference
-        let minutesAway = difference * 60
-        let secondsAway = difference * 3600
+        let daysAway = difference / (1000 * 60 * 60 * 24)
+        let hoursAway = (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        let minutesAway = (difference % (1000 * 60 * 60)) / (1000 * 60)
+        let secondsAway = (difference % (1000 * 60)) / 1000
 
         $countdownDays.textContent = parseInt(daysAway) + ' ' + 'DAYS'
         $countdownHours.textContent = parseInt(hoursAway) + ' ' + 'HOURS'
         $countdownMinutes.textContent = parseInt(minutesAway) + ' ' + 'MINUTES'
         $countdownSeconds.textContent = parseInt(secondsAway) + ' ' + 'SECONDS AWAY!'
     }, 1000)
-    
 })
 
 // Print After Refresh

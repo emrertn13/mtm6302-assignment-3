@@ -52,7 +52,7 @@ table {
 #container {
     width: 100%;
     margin: 0 auto;
-    margin-top: 20rem;
+    margin-top: 25rem;
 }
 #form {
     width: 100%;
@@ -75,8 +75,14 @@ select {
     padding-bottom: 0.5rem;
     padding-right: 2rem;
     padding-left: 2rem;
+    background-color: red;
+    border: 1px solid black;
 }
-
+#title-text {
+    background-color: red;
+    border: 1px solid black;
+    resize: none;
+}
 button {
     width: fit-content;
     margin: 0 auto;
@@ -85,6 +91,15 @@ button {
     padding-bottom: 0.5rem;
     padding-right: 2rem;
     padding-left: 2rem;
+    background-color: red;
+    border: 1px solid black;
+}
+select:hover,
+button:hover,
+#title-text:hover {
+    background-color: black;
+    color: red;
+    border: 1px solid white;
 }
 #go-back {
     display: none;
@@ -100,4 +115,44 @@ button {
     margin: 0 auto;
     margin-bottom: 0.5rem;
     font-size: 2rem;
+}
+
+#countdown {
+    display: flex;
+    justify-content: space-between;
+}
+
+body {
+    background: url("/project/bg-main.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+
+
+
+@media screen and (max-width: 900px) {
+    body {
+        background: none;
+        background-color: red;
+    }
+}
+@media screen and (max-width: 550px) {
+    #container2 {
+        display: flex;
+        flex-direction: column;
+    }
+    #title-text {
+        width: 50%;
+    }
+    #container {
+        margin-top: 20rem;
+    }
+    #countdown {
+        flex-direction: column;
+        
+    }
+    #countdown span {
+        width: fit-content;
+        margin: 0 auto;
+    }
 }
