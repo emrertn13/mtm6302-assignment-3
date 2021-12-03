@@ -128,6 +128,11 @@ body {
     background-size: 100%;
 }
 
+#display {
+    background-color: red;
+    padding: 1rem;
+}
+
 
 
 @media screen and (max-width: 900px) {
